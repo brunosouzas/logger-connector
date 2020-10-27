@@ -1,0 +1,1711 @@
+{
+  "name": "Logger",
+  "description": "This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.",
+  "version": "1.0.0",
+  "vendor": "Mulesoft",
+  "category": "COMMUNITY",
+  "xmlDsl": {
+    "prefix": "logger",
+    "namespace": "http://www.mulesoft.org/schema/mule/logger",
+    "schemaLocation": "http://www.mulesoft.org/schema/mule/logger/current/mule-logger.xsd",
+    "schemaVersion": "1.0.0",
+    "xsdFileName": "mule-logger.xsd"
+  },
+  "resources": [
+    "modules/loggerModule.dwl"
+  ],
+  "subTypes": [
+    {
+      "baseType": {
+        "format": "java",
+        "type": "@ref:com.brunosouzas.extension.logger.destinations.Destination"
+      },
+      "subTypes": [
+        {
+          "format": "java",
+          "type": "@ref:com.brunosouzas.extension.logger.destinations.JMSDestination"
+        },
+        {
+          "format": "java",
+          "type": "@ref:com.brunosouzas.extension.logger.destinations.AMQDestination"
+        },
+        {
+          "format": "java",
+          "type": "@ref:com.brunosouzas.extension.logger.destinations.AMQPDestination"
+        },
+        {
+          "format": "java",
+          "type": "@ref:com.brunosouzas.extension.logger.destinations.HTTPDestination"
+        },
+        {
+          "format": "java",
+          "type": "@ref:com.brunosouzas.extension.logger.destinations.SQSDestination"
+        }
+      ]
+    }
+  ],
+  "privilegedPackages": [],
+  "privilegedArtifacts": [],
+  "externalLibraries": [],
+  "importedTypes": [],
+  "configurations": [
+    {
+      "stereotype": {
+        "type": "CONFIG",
+        "namespace": "LOGGER",
+        "parent": {
+          "type": "MODULE_CONFIG",
+          "namespace": "MULE"
+        }
+      },
+      "parameterGroupModels": [
+        {
+          "parameters": [
+            {
+              "type": {
+                "format": "java",
+                "type": "@ref:com.brunosouzas.extension.logger.destinations.Destination"
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 9,
+                "tabName": "Destinations"
+              },
+              "allowedStereotypeModels": [],
+              "name": "externalDestination",
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "Object",
+                "annotations": {
+                  "typeId": "org.mule.runtime.extension.api.runtime.ExpirationPolicy",
+                  "description": {
+                    "value": "Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit."
+                  },
+                  "typeDsl": {
+                    "allowInlineDefinition": true,
+                    "allowTopLevelDefinition": false
+                  }
+                },
+                "fields": [
+                  {
+                    "key": {
+                      "name": "maxIdleTime"
+                    },
+                    "model": {
+                      "type": "Number",
+                      "annotations": {
+                        "int": {},
+                        "classInformation": {
+                          "classname": "java.lang.Long",
+                          "hasDefaultConstructor": false,
+                          "isInterface": false,
+                          "isInstantiable": false,
+                          "isAbstract": false,
+                          "isFinal": true,
+                          "implementedInterfaces": [
+                            "java.lang.Comparable"
+                          ],
+                          "parent": "java.lang.Number",
+                          "genericTypes": [],
+                          "isMap": false
+                        },
+                        "default": "5"
+                      }
+                    },
+                    "annotations": {
+                      "description": {
+                        "value": "A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it\u0027s considered eligible for expiration"
+                      },
+                      "expressionSupport": {
+                        "value": "NOT_SUPPORTED"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "name": "timeUnit"
+                    },
+                    "model": {
+                      "type": "String",
+                      "annotations": {
+                        "enum": {
+                          "type": "[Ljava.lang.String;",
+                          "values": [
+                            "NANOSECONDS",
+                            "MICROSECONDS",
+                            "MILLISECONDS",
+                            "SECONDS",
+                            "MINUTES",
+                            "HOURS",
+                            "DAYS"
+                          ]
+                        },
+                        "default": "MINUTES"
+                      }
+                    },
+                    "annotations": {
+                      "description": {
+                        "value": "A time unit that qualifies the maxIdleTime attribute"
+                      },
+                      "expressionSupport": {
+                        "value": "NOT_SUPPORTED"
+                      }
+                    }
+                  }
+                ]
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "NOT_SUPPORTED",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": false,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 10,
+                "tabName": "Advanced"
+              },
+              "allowedStereotypeModels": [],
+              "name": "expirationPolicy",
+              "description": "Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.",
+              "modelProperties": {
+                "org.mule.runtime.extension.api.property.QNameModelProperty": {
+                  "value": {
+                    "namespaceURI": "http://www.mulesoft.org/schema/mule/core",
+                    "localPart": "expiration-policy",
+                    "prefix": "mule"
+                  }
+                },
+                "org.mule.runtime.extension.api.property.InfrastructureParameterModelProperty": {
+                  "sequence": 4
+                }
+              }
+            }
+          ],
+          "exclusiveParametersModels": [],
+          "layoutModel": {
+            "password": false,
+            "text": false,
+            "query": false,
+            "order": 0
+          },
+          "showInDsl": false,
+          "name": "General",
+          "description": "",
+          "modelProperties": {}
+        },
+        {
+          "parameters": [
+            {
+              "type": {
+                "format": "java",
+                "type": "String"
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "defaultValue": "${json.logger.application.name}",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 1
+              },
+              "allowedStereotypeModels": [],
+              "name": "applicationName",
+              "displayModel": {
+                "summary": "Name of the Mule application. Recommendation: This value should be based on pom.xml"
+              },
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "String"
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "defaultValue": "${json.logger.application.version}",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 2
+              },
+              "allowedStereotypeModels": [],
+              "name": "applicationVersion",
+              "displayModel": {
+                "summary": "Version of the Mule application. Recommendation: This value should be based on pom.xml"
+              },
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "String"
+              },
+              "hasDynamicType": false,
+              "required": true,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 3
+              },
+              "allowedStereotypeModels": [],
+              "name": "environment",
+              "displayModel": {
+                "summary": "Name of the Mule Environment where the application is running. Recommendation: This value should be based on external property",
+                "example": "${mule.env}"
+              },
+              "description": "",
+              "modelProperties": {}
+            }
+          ],
+          "exclusiveParametersModels": [],
+          "layoutModel": {
+            "password": false,
+            "text": false,
+            "query": false,
+            "order": 1,
+            "tabName": "General"
+          },
+          "showInDsl": false,
+          "name": "Global Settings",
+          "description": "",
+          "modelProperties": {}
+        },
+        {
+          "parameters": [
+            {
+              "type": {
+                "format": "java",
+                "type": "Boolean",
+                "annotations": {
+                  "typeId": "boolean"
+                }
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "defaultValue": "true",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 4
+              },
+              "allowedStereotypeModels": [],
+              "name": "prettyPrint",
+              "displayModel": {
+                "summary": "Indicate if log entries should be formatted or single line"
+              },
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "Boolean",
+                "annotations": {
+                  "typeId": "boolean"
+                }
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "defaultValue": "true",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 5
+              },
+              "allowedStereotypeModels": [],
+              "name": "logLocationInfo",
+              "displayModel": {
+                "summary": "Indicate if location information should be logged"
+              },
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "Boolean",
+                "annotations": {
+                  "typeId": "boolean"
+                }
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "SUPPORTED",
+              "defaultValue": "true",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 6
+              },
+              "allowedStereotypeModels": [],
+              "name": "parseContentFieldsInJsonOutput",
+              "displayModel": {
+                "summary": "Indicate if Content fields should be parsed as part of the JSON logger output"
+              },
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "String"
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "NOT_SUPPORTED",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 7
+              },
+              "allowedStereotypeModels": [],
+              "name": "disabledFields",
+              "displayModel": {
+                "summary": "Indicate which fields (from JSON output) should be disabled from logging separated by comma. They should match the exact name given in loggerProcessor.json schema",
+                "example": "message,content"
+              },
+              "description": "",
+              "modelProperties": {}
+            },
+            {
+              "type": {
+                "format": "java",
+                "type": "String"
+              },
+              "hasDynamicType": false,
+              "required": false,
+              "isConfigOverride": false,
+              "expressionSupport": "NOT_SUPPORTED",
+              "role": "BEHAVIOUR",
+              "dslConfiguration": {
+                "allowsInlineDefinition": true,
+                "allowsReferences": true,
+                "allowTopLevelDefinition": false
+              },
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 8
+              },
+              "allowedStereotypeModels": [],
+              "name": "contentFieldsDataMasking",
+              "displayModel": {
+                "summary": "Indicate which fields (inside a content type with JSON output only) should be masked before from logging separated by comma. They can be JSON keys or JSON paths. If empty, no masking will be applied. Recommendation: This value should be based on external property",
+                "example": "client_secret,password,$.myArray[1].someField,$..path.to.a.field"
+              },
+              "description": "",
+              "modelProperties": {}
+            }
+          ],
+          "exclusiveParametersModels": [],
+          "layoutModel": {
+            "password": false,
+            "text": false,
+            "query": false,
+            "order": 2
+          },
+          "showInDsl": false,
+          "name": "JSON Output",
+          "description": "",
+          "modelProperties": {}
+        }
+      ],
+      "externalLibraryModels": [],
+      "operations": [
+        {
+          "blocking": false,
+          "executionType": "BLOCKING",
+          "output": {
+            "type": {
+              "format": "java",
+              "type": "Void"
+            },
+            "hasDynamicType": false,
+            "description": "",
+            "modelProperties": {}
+          },
+          "outputAttributes": {
+            "type": {
+              "format": "java",
+              "type": "Void"
+            },
+            "hasDynamicType": false,
+            "description": "",
+            "modelProperties": {}
+          },
+          "transactional": false,
+          "requiresConnection": false,
+          "supportsStreaming": false,
+          "notifications": [],
+          "nestedComponents": [],
+          "errors": [],
+          "stereotype": {
+            "type": "PROCESSOR",
+            "namespace": "MULE"
+          },
+          "parameterGroupModels": [
+            {
+              "parameters": [
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "defaultValue": "#[correlationId]",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 1,
+                    "tabName": "Advanced"
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "correlationId",
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String",
+                    "annotations": {
+                      "typeId": "com.brunosouzas.extension.logger.api.pojos.SourceSystem",
+                      "enum": {
+                        "type": "[Ljava.lang.String;",
+                        "values": [
+                          "GENERAL"
+                        ]
+                      }
+                    }
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 2
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "sourceSystem",
+                  "displayModel": {
+                    "summary": "code used to identify the source system of the error."
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 3
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "errorCode",
+                  "displayModel": {
+                    "summary": "error code used to identify the problem in the source system",
+                    "example": "ZSD-001"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": true,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 4
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "message",
+                  "displayModel": {
+                    "summary": "Message to be logged or Source system error message",
+                    "example": "Add a log message"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "Binary",
+                    "annotations": {
+                      "classInformation": {
+                        "classname": "java.io.InputStream",
+                        "hasDefaultConstructor": true,
+                        "isInterface": false,
+                        "isInstantiable": false,
+                        "isAbstract": true,
+                        "isFinal": false,
+                        "implementedInterfaces": [
+                          "java.io.Closeable"
+                        ],
+                        "parent": "",
+                        "genericTypes": [],
+                        "isMap": false
+                      }
+                    }
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "defaultValue": "#[import modules::loggerModule output application/json ---\n{\n    payload: loggerModule::stringifyNonJSON(payload) \n}]",
+                  "role": "PRIMARY_CONTENT",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": false,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 5
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "content",
+                  "displayModel": {
+                    "summary": "NOTE: Writing the entire payload every time across your application can cause serious performance issues"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String",
+                    "annotations": {
+                      "typeId": "com.brunosouzas.extension.logger.api.pojos.TracePoint",
+                      "enum": {
+                        "type": "[Ljava.lang.String;",
+                        "values": [
+                          "START",
+                          "BEFORE_TRANSFORM",
+                          "AFTER_TRANSFORM",
+                          "BEFORE_REQUEST",
+                          "AFTER_REQUEST",
+                          "FLOW",
+                          "END",
+                          "EXCEPTION"
+                        ]
+                      }
+                    }
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "defaultValue": "START",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 6
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "tracePoint",
+                  "displayModel": {
+                    "summary": "Current processing stage"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String",
+                    "annotations": {
+                      "typeId": "com.brunosouzas.extension.logger.api.pojos.Priority",
+                      "enum": {
+                        "type": "[Ljava.lang.String;",
+                        "values": [
+                          "DEBUG",
+                          "TRACE",
+                          "INFO",
+                          "WARN",
+                          "ERROR"
+                        ]
+                      }
+                    }
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "defaultValue": "INFO",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 7
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "priority",
+                  "displayModel": {
+                    "summary": "Logger priority"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 8
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "category",
+                  "displayModel": {
+                    "summary": "If not set, by default will log to the com.brunosouzas.logger category"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                }
+              ],
+              "exclusiveParametersModels": [],
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 1
+              },
+              "showInDsl": false,
+              "name": "Logger",
+              "description": "",
+              "modelProperties": {}
+            }
+          ],
+          "name": "logger",
+          "description": "Log a new entry",
+          "modelProperties": {},
+          "kind": "operation"
+        }
+      ],
+      "connectionProviders": [],
+      "messageSources": [],
+      "name": "config",
+      "description": "Default configuration",
+      "modelProperties": {}
+    }
+  ],
+  "operations": [],
+  "functions": [],
+  "constructs": [],
+  "connectionProviders": [],
+  "messageSources": [],
+  "notifications": [],
+  "errors": [
+    {
+      "error": "LOGGER:RETRY_EXHAUSTED",
+      "parent": "MULE:RETRY_EXHAUSTED",
+      "handleable": true
+    },
+    {
+      "error": "MULE:RETRY_EXHAUSTED",
+      "parent": "MULE:ANY",
+      "handleable": true
+    },
+    {
+      "error": "MULE:ANY",
+      "handleable": true
+    },
+    {
+      "error": "LOGGER:CONNECTIVITY",
+      "parent": "MULE:CONNECTIVITY",
+      "handleable": true
+    },
+    {
+      "error": "MULE:CONNECTIVITY",
+      "parent": "MULE:ANY",
+      "handleable": true
+    }
+  ],
+  "modelProperties": {},
+  "types": [
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "com.brunosouzas.extension.logger.destinations.AMQDestination",
+        "classInformation": {
+          "classname": "com.brunosouzas.extension.logger.destinations.AMQDestination",
+          "hasDefaultConstructor": true,
+          "isInterface": false,
+          "isInstantiable": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "implementedInterfaces": [
+            "com.brunosouzas.extension.logger.destinations.Destination"
+          ],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "AMQDestination"
+        }
+      },
+      "fields": [
+        {
+          "key": {
+            "name": "queueOrExchangeDestination"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Queue or Exchange Destination",
+                "summary": "Name of the target queue or exchange destination (e.g. logger-queue, logger-exchange)"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "url"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "default": "https://mq-us-east-1.anypoint.mulesoft.com/api/v1",
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "URL",
+                "summary": "The region URL where the Queue resides. Obtain this URL from the Anypoint Platform \u003e MQ",
+                "example": "https://mq-us-east-1.anypoint.mulesoft.com/api/v1"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "clientId",
+            "required": "true"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Client App ID",
+                "summary": "The Client App ID to be used. Obtain this ID from Anypoint Platform \u003e MQ \u003e Client Apps"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "clientSecret",
+            "required": "true"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "layout": {
+              "layoutModel": {
+                "password": true,
+                "text": false,
+                "query": false
+              }
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Client Secret",
+                "summary": "The Client App Secret for the given Client App ID"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "logCategories"
+          },
+          "model": {
+            "type": "Array",
+            "annotations": {
+              "classInformation": {
+                "classname": "java.util.ArrayList",
+                "hasDefaultConstructor": true,
+                "isInterface": false,
+                "isInstantiable": true,
+                "isAbstract": false,
+                "isFinal": false,
+                "implementedInterfaces": [
+                  "java.util.List",
+                  "java.util.RandomAccess",
+                  "java.lang.Cloneable",
+                  "java.io.Serializable"
+                ],
+                "parent": "java.util.AbstractList",
+                "genericTypes": [
+                  "java.lang.String"
+                ],
+                "isMap": false
+              }
+            },
+            "item": {
+              "type": "String"
+            }
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Log Categories",
+                "summary": "Indicate which log categories should be send (e.g. [\"my.category\",\"another.category\"]). If empty, all will be send."
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "maxBatchSize"
+          },
+          "model": {
+            "type": "Number",
+            "annotations": {
+              "classInformation": {
+                "classname": "int",
+                "hasDefaultConstructor": false,
+                "isInterface": false,
+                "isInstantiable": false,
+                "isAbstract": true,
+                "isFinal": true,
+                "implementedInterfaces": [],
+                "parent": "",
+                "genericTypes": [],
+                "isMap": false
+              },
+              "int": {}
+            }
+          },
+          "annotations": {
+            "default": "25",
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Max Batch Size",
+                "summary": "Indicate max quantity of logs entries to be send to the external destination"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "com.brunosouzas.extension.logger.destinations.AMQPDestination",
+        "classInformation": {
+          "classname": "com.brunosouzas.extension.logger.destinations.AMQPDestination",
+          "hasDefaultConstructor": true,
+          "isInterface": false,
+          "isInstantiable": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "implementedInterfaces": [
+            "com.brunosouzas.extension.logger.destinations.Destination"
+          ],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "AMQPDestination"
+        }
+      },
+      "fields": [
+        {
+          "key": {
+            "name": "amqpConfigurationRef"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Configuration Ref"
+              }
+            },
+            "stereotype": {
+              "allowedStereotypes": [
+                {
+                  "type": "CONFIG",
+                  "namespace": "AMQP",
+                  "parent": {
+                    "type": "MODULE_CONFIG",
+                    "namespace": "MULE"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "exchangeDestination"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Exchange Destination",
+                "summary": "Name of the target exchange destination (e.g. logger-exchange)"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "logCategories"
+          },
+          "model": {
+            "type": "Array",
+            "annotations": {
+              "classInformation": {
+                "classname": "java.util.ArrayList",
+                "hasDefaultConstructor": true,
+                "isInterface": false,
+                "isInstantiable": true,
+                "isAbstract": false,
+                "isFinal": false,
+                "implementedInterfaces": [
+                  "java.util.List",
+                  "java.util.RandomAccess",
+                  "java.lang.Cloneable",
+                  "java.io.Serializable"
+                ],
+                "parent": "java.util.AbstractList",
+                "genericTypes": [
+                  "java.lang.String"
+                ],
+                "isMap": false
+              }
+            },
+            "item": {
+              "type": "String"
+            }
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Log Categories",
+                "summary": "Indicate which log categories should be send (e.g. [\"my.category\",\"another.category\"]). If empty, all will be send."
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "maxBatchSize"
+          },
+          "model": {
+            "type": "Number",
+            "annotations": {
+              "classInformation": {
+                "classname": "int",
+                "hasDefaultConstructor": false,
+                "isInterface": false,
+                "isInstantiable": false,
+                "isAbstract": true,
+                "isFinal": true,
+                "implementedInterfaces": [],
+                "parent": "",
+                "genericTypes": [],
+                "isMap": false
+              },
+              "int": {}
+            }
+          },
+          "annotations": {
+            "default": "25",
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Max Batch Size",
+                "summary": "Indicate max quantity of logs entries to be send to the external destination"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "com.brunosouzas.extension.logger.destinations.Destination",
+        "classInformation": {
+          "classname": "com.brunosouzas.extension.logger.destinations.Destination",
+          "hasDefaultConstructor": false,
+          "isInterface": true,
+          "isInstantiable": false,
+          "isAbstract": true,
+          "isFinal": false,
+          "implementedInterfaces": [],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "Destination"
+        }
+      },
+      "fields": []
+    },
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "com.brunosouzas.extension.logger.destinations.HTTPDestination",
+        "classInformation": {
+          "classname": "com.brunosouzas.extension.logger.destinations.HTTPDestination",
+          "hasDefaultConstructor": true,
+          "isInterface": false,
+          "isInstantiable": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "implementedInterfaces": [
+            "com.brunosouzas.extension.logger.destinations.Destination"
+          ],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "HTTPDestination"
+        }
+      },
+      "fields": [
+        {
+          "key": {
+            "name": "url",
+            "required": "true"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "URL from Log API",
+                "summary": "URL used to log API with POST method"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "passwordAuthentication"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Password Authentication",
+                "summary": "Password to use in Authentication your API (Cripty Password to Basic Authentication). If empty, all will be send."
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "logCategories"
+          },
+          "model": {
+            "type": "Array",
+            "annotations": {
+              "classInformation": {
+                "classname": "java.util.ArrayList",
+                "hasDefaultConstructor": true,
+                "isInterface": false,
+                "isInstantiable": true,
+                "isAbstract": false,
+                "isFinal": false,
+                "implementedInterfaces": [
+                  "java.util.List",
+                  "java.util.RandomAccess",
+                  "java.lang.Cloneable",
+                  "java.io.Serializable"
+                ],
+                "parent": "java.util.AbstractList",
+                "genericTypes": [
+                  "java.lang.String"
+                ],
+                "isMap": false
+              }
+            },
+            "item": {
+              "type": "String"
+            }
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Log Categories",
+                "summary": "Indicate which log categories should be send (e.g. [\"my.category\",\"another.category\"]). If empty, all will be send."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "com.brunosouzas.extension.logger.destinations.JMSDestination",
+        "classInformation": {
+          "classname": "com.brunosouzas.extension.logger.destinations.JMSDestination",
+          "hasDefaultConstructor": true,
+          "isInterface": false,
+          "isInstantiable": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "implementedInterfaces": [
+            "com.brunosouzas.extension.logger.destinations.Destination"
+          ],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "JMSDestination"
+        }
+      },
+      "fields": [
+        {
+          "key": {
+            "name": "jmsConfigurationRef"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Configuration Ref"
+              }
+            },
+            "stereotype": {
+              "allowedStereotypes": [
+                {
+                  "type": "CONFIG",
+                  "namespace": "JMS",
+                  "parent": {
+                    "type": "MODULE_CONFIG",
+                    "namespace": "MULE"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "queueDestination"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Queue Destination",
+                "summary": "Name of the target queue destination (e.g. logger-queue)"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "logCategories"
+          },
+          "model": {
+            "type": "Array",
+            "annotations": {
+              "classInformation": {
+                "classname": "java.util.ArrayList",
+                "hasDefaultConstructor": true,
+                "isInterface": false,
+                "isInstantiable": true,
+                "isAbstract": false,
+                "isFinal": false,
+                "implementedInterfaces": [
+                  "java.util.List",
+                  "java.util.RandomAccess",
+                  "java.lang.Cloneable",
+                  "java.io.Serializable"
+                ],
+                "parent": "java.util.AbstractList",
+                "genericTypes": [
+                  "java.lang.String"
+                ],
+                "isMap": false
+              }
+            },
+            "item": {
+              "type": "String"
+            }
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Log Categories",
+                "summary": "Indicate which log categories should be send (e.g. [\"my.category\",\"another.category\"]). If empty, all will be send."
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "maxBatchSize"
+          },
+          "model": {
+            "type": "Number",
+            "annotations": {
+              "classInformation": {
+                "classname": "int",
+                "hasDefaultConstructor": false,
+                "isInterface": false,
+                "isInstantiable": false,
+                "isAbstract": true,
+                "isFinal": true,
+                "implementedInterfaces": [],
+                "parent": "",
+                "genericTypes": [],
+                "isMap": false
+              },
+              "int": {}
+            }
+          },
+          "annotations": {
+            "default": "25",
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Max Batch Size",
+                "summary": "Indicate max quantity of logs entries to be send to the external destination"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "com.brunosouzas.extension.logger.destinations.SQSDestination",
+        "classInformation": {
+          "classname": "com.brunosouzas.extension.logger.destinations.SQSDestination",
+          "hasDefaultConstructor": true,
+          "isInterface": false,
+          "isInstantiable": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "implementedInterfaces": [
+            "com.brunosouzas.extension.logger.destinations.Destination"
+          ],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "SQSDestination"
+        }
+      },
+      "fields": [
+        {
+          "key": {
+            "name": "awsAccessKey"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "AWS Access Key"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "awsSecretKey"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "AWS Secret Key"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "awsRegion"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "AWS Region",
+                "example": "us-east-1"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "queueName"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "AWS SQS Queue Name"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "queueUrl"
+          },
+          "model": {
+            "type": "String"
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "AWS SQS Queue URL"
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "logCategories"
+          },
+          "model": {
+            "type": "Array",
+            "annotations": {
+              "classInformation": {
+                "classname": "java.util.ArrayList",
+                "hasDefaultConstructor": true,
+                "isInterface": false,
+                "isInstantiable": true,
+                "isAbstract": false,
+                "isFinal": false,
+                "implementedInterfaces": [
+                  "java.util.List",
+                  "java.util.RandomAccess",
+                  "java.lang.Cloneable",
+                  "java.io.Serializable"
+                ],
+                "parent": "java.util.AbstractList",
+                "genericTypes": [
+                  "java.lang.String"
+                ],
+                "isMap": false
+              }
+            },
+            "item": {
+              "type": "String"
+            }
+          },
+          "annotations": {
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Log Categories",
+                "summary": "Indicate which log categories should be send (e.g. [\"my.category\",\"another.category\"]). If empty, all will be send."
+              }
+            }
+          }
+        },
+        {
+          "key": {
+            "name": "maxBatchSize"
+          },
+          "model": {
+            "type": "Number",
+            "annotations": {
+              "classInformation": {
+                "classname": "int",
+                "hasDefaultConstructor": false,
+                "isInterface": false,
+                "isInstantiable": false,
+                "isAbstract": true,
+                "isFinal": true,
+                "implementedInterfaces": [],
+                "parent": "",
+                "genericTypes": [],
+                "isMap": false
+              },
+              "int": {}
+            }
+          },
+          "annotations": {
+            "default": "30",
+            "expressionSupport": {
+              "value": "SUPPORTED"
+            },
+            "display": {
+              "displayModel": {
+                "displayName": "Max Batch Size",
+                "summary": "Indicate max quantity of logs entries to be send to the external destination"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

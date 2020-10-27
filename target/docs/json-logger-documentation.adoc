@@ -1,0 +1,231 @@
+:toc:               left
+:toc-title:         JSON Logger Module
+:toclevels:         2
+:last-update-label!:
+:docinfo:
+:source-highlighter: coderay
+:icons: font
+
+
+= JSON Logger Module Documentation Reference
+
++++
+This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.
++++
+
+
+== Configurations
+---
+[[config]]
+=== Config
+
++++
+Default configuration
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+|Name | String | The name for this configuration. Connectors reference the configuration with this name. | | *x*{nbsp}
+| External Destination a| One of:
+
+* <<JMSDestination>>
+* <<AMQDestination>>
+* <<AMQPDestination>>
+* <<HTTPDestination>>
+* <<SQSDestination>> |  |  | {nbsp}
+| Expiration Policy a| <<ExpirationPolicy>> |  +++Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.+++ |  | {nbsp}
+| Application Name a| String |  +++Name of the Mule application. Recommendation: This value should be based on pom.xml+++ |  +++${json.logger.application.name}+++ | {nbsp}
+| Application Version a| String |  +++Version of the Mule application. Recommendation: This value should be based on pom.xml+++ |  +++${json.logger.application.version}+++ | {nbsp}
+| Environment a| String |  +++Name of the Mule Environment where the application is running. Recommendation: This value should be based on external property+++ |  | *x*{nbsp}
+| Pretty Print a| Boolean |  +++Indicate if log entries should be formatted or single line+++ |  +++true+++ | {nbsp}
+| Log Location Info a| Boolean |  +++Indicate if location information should be logged+++ |  +++true+++ | {nbsp}
+| Parse Content Fields In Json Output a| Boolean |  +++Indicate if Content fields should be parsed as part of the JSON logger output+++ |  +++true+++ | {nbsp}
+| Disabled Fields a| String |  +++Indicate which fields (from JSON output) should be disabled from logging separated by comma. They should match the exact name given in loggerProcessor.json schema+++ |  | {nbsp}
+| Content Fields Data Masking a| String |  +++Indicate which fields (inside a content type with JSON output only) should be masked before from logging separated by comma. They can be JSON keys or JSON paths. If empty, no masking will be applied. Recommendation: This value should be based on external property+++ |  | {nbsp}
+|======================
+
+
+==== Associated Operations
+* <<logger>> {nbsp}
+
+
+
+== Operations
+
+[[logger]]
+=== Logger
+`<json-logger:logger>`
+
++++
+Log a new entry
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Correlation Id a| String |  |  +++#[correlationId]+++ | {nbsp}
+| Source System a| String |  +++code used to identify the source system of the error.+++ |  | {nbsp}
+| Error Code a| String |  +++error code used to identify the problem in the source system+++ |  | {nbsp}
+| Message a| String |  +++Message to be logged or Source system error message+++ |  | *x*{nbsp}
+| Content a| Binary |  +++NOTE: Writing the entire payload every time across your application can cause serious performance issues+++ |  +++#[import modules::JSONLoggerModule output application/json ---
+{
+    payload: JSONLoggerModule::stringifyNonJSON(payload) 
+}]+++ | {nbsp}
+| Trace Point a| Enumeration, one of:
+
+** START
+** BEFORE_TRANSFORM
+** AFTER_TRANSFORM
+** BEFORE_REQUEST
+** AFTER_REQUEST
+** FLOW
+** END
+** EXCEPTION |  +++Current processing stage+++ |  +++START+++ | {nbsp}
+| Priority a| Enumeration, one of:
+
+** DEBUG
+** TRACE
+** INFO
+** WARN
+** ERROR |  +++Logger priority+++ |  +++INFO+++ | {nbsp}
+| Category a| String |  +++If not set, by default will log to the org.mule.extension.jsonlogger.JsonLogger category+++ |  | {nbsp}
+|======================
+
+
+==== For Configurations.
+* <<config>> {nbsp}
+
+
+
+[[loggerScope]]
+=== Logger Scope
+`<json-logger:logger-scope>`
+
++++
+Log scope
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Module configuration a| String |  +++Indicate which Global config should be associated with this Scope.+++ |  | *x*{nbsp}
+| Priority a| Enumeration, one of:
+
+** DEBUG
+** TRACE
+** INFO
+** WARN
+** ERROR |  |  +++INFO+++ | {nbsp}
+| Scope Trace Point a| Enumeration, one of:
+
+** DATA_TRANSFORM_SCOPE
+** OUTBOUND_REQUEST_SCOPE
+** FLOW_LOGIC_SCOPE |  |  +++OUTBOUND_REQUEST_SCOPE+++ | {nbsp}
+| Category a| String |  +++If not set, by default will log to the org.mule.extension.jsonlogger.JsonLogger category+++ |  | {nbsp}
+| Correlation Id a| String |  |  +++#[correlationId]+++ | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| Any
+| *Attributes Type* a| Any
+|======================
+
+
+
+
+
+== Types
+[[ExpirationPolicy]]
+=== Expiration Policy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Max Idle Time a| Number | A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it's considered eligible for expiration |  | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | A time unit that qualifies the maxIdleTime attribute |  | 
+|======================
+
+[[JMSDestination]]
+=== JMS Destination
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Jms Configuration Ref a| String |  |  | 
+| Queue Destination a| String |  |  | 
+| Log Categories a| Array of String |  |  | 
+| Max Batch Size a| Number |  | 25 | 
+|======================
+
+[[AMQDestination]]
+=== AMQ Destination
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Queue Or Exchange Destination a| String |  |  | 
+| Url a| String | The region URL where the Queue resides. This URL can be obtained and configured from the Anypoint Platform &gt; MQ console.
+ Copy/paste the region URL into this field." | https://mq-us-east-1.anypoint.mulesoft.com/api/v1 | 
+| Client Id a| String | In Anypoint Platform &gt; MQ &gt; Client Apps, click an app name (or create a new app) and
+ click Copy for the Client App ID field. Paste this value in the Studio Client App ID field |  | x
+| Client Secret a| String | In Anypoint Platform > MQ > Client Apps, click an app name (or create a new app) and
+ click Copy for the Client Secret field. Paste this value in the Studio Client Secret field. |  | x
+| Log Categories a| Array of String |  |  | 
+| Max Batch Size a| Number |  | 25 | 
+|======================
+
+[[AMQPDestination]]
+=== AMQP Destination
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Amqp Configuration Ref a| String |  |  | 
+| Exchange Destination a| String |  |  | 
+| Log Categories a| Array of String |  |  | 
+| Max Batch Size a| Number |  | 25 | 
+|======================
+
+[[HTTPDestination]]
+=== HTTP Destination
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Url a| String |  |  | x
+| Password Authentication a| String |  |  | 
+| Log Categories a| Array of String |  |  | 
+|======================
+
+[[SQSDestination]]
+=== SQS Destination
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Aws Access Key a| String |  |  | 
+| Aws Secret Key a| String |  |  | 
+| Aws Region a| String |  |  | 
+| Queue Name a| String |  |  | 
+| Queue Url a| String |  |  | 
+| Log Categories a| Array of String |  |  | 
+| Max Batch Size a| Number |  | 30 | 
+|======================
+
