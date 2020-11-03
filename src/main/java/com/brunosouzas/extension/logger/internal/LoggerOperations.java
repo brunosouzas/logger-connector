@@ -2,6 +2,7 @@ package com.brunosouzas.extension.logger.internal;
 
 import static org.mule.runtime.api.meta.ExpressionSupport.NOT_SUPPORTED;
 import static org.mule.runtime.api.metadata.DataType.TEXT_STRING;
+import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,12 +23,11 @@ import org.mule.runtime.api.transformation.TransformationService;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.execution.Execution;
 import org.mule.runtime.extension.api.annotation.param.Config;
+import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.runtime.operation.FlowListener;
-import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.extension.api.runtime.parameter.CorrelationInfo;
 import org.mule.runtime.extension.api.runtime.parameter.ParameterResolver;
-import org.mule.runtime.extension.api.runtime.process.CompletionCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,9 +53,6 @@ public class LoggerOperations {
     protected transient Logger customLogger;
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerOperations.class);
 
-    // Void Result for NIO
-    private final Result<Void, Void> VOID_RESULT = Result.<Void, Void>builder().build();
-
     // JSON Object Mapper
     @Inject
     ObjectMapperSingleton om;
@@ -76,16 +73,41 @@ public class LoggerOperations {
      * Log a new entry
      */
     @Execution(ExecutionType.BLOCKING)
-    public void logger(@ParameterGroup(name = "Logger") @Expression(value = NOT_SUPPORTED) LoggerProcessor loggerProcessor,
+    public void logger(@ParameterGroup(name="Logger") @Expression(value=NOT_SUPPORTED) LoggerProcessor loggerProcessor,
                        CorrelationInfo correlationInfo,
                        ComponentLocation location,
                        @Config LoggerConfiguration config,
-                       FlowListener flowListener,
-                       CompletionCallback<Void, Void> callback) {
+                       FlowListener flowListener) {
+    	
+    	processLog(loggerProcessor, correlationInfo, location, config, flowListener);
+    	
+    }
+    
+    /**
+     * Log a new entry
+     */
+    @MediaType(value=MediaType.APPLICATION_JSON, strict=false)
+    @Execution(ExecutionType.BLOCKING)
+    public String loggerPayload(@ParameterGroup(name="Logger") @Expression(value=NOT_SUPPORTED) LoggerProcessor loggerProcessor,
+                       CorrelationInfo correlationInfo,
+                       ComponentLocation location,
+                       @Config LoggerConfiguration config,
+                       FlowListener flowListener) {
 
-        Long initialTimestamp, loggerTimestamp;
+        return processLog(loggerProcessor, correlationInfo, location, config, flowListener);
+    }
+
+	private String processLog(@ParameterGroup(name="Logger") @Expression(value=NOT_SUPPORTED) LoggerProcessor loggerProcessor,
+            				CorrelationInfo correlationInfo,
+            				ComponentLocation location,
+            				@Config LoggerConfiguration config,
+            				FlowListener flowListener) {
+		
+		Long initialTimestamp, loggerTimestamp;
         initialTimestamp = loggerTimestamp = System.currentTimeMillis();
 
+        String finalLog = null;
+        
         initLoggerCategory(loggerProcessor.getCategory());
 
         LOGGER.debug("correlationInfo.getEventId(): " + correlationInfo.getEventId());
@@ -217,8 +239,8 @@ public class LoggerOperations {
             /** End field ordering **/
 
             /** Print Logger **/
-            String finalLog = printObjectToLog(mergedLogger, loggerProcessor.getPriority().toString(), config.getJsonOutput().isPrettyPrint());
-
+            finalLog = printObjectToLog(mergedLogger, loggerProcessor.getPriority().toString(), config.getJsonOutput().isPrettyPrint());
+            
             /** Forward Log to External Destination **/
             if (config.getExternalDestination() != null) {
                 LOGGER.debug("config.getExternalDestination().getSupportedCategories().isEmpty(): " + config.getExternalDestination().getSupportedCategories().isEmpty());
@@ -231,9 +253,10 @@ public class LoggerOperations {
         } else {
             LOGGER.debug("Avoiding logger operation logic execution due to log priority not being enabled");
         }
-        callback.success(VOID_RESULT);
-    }
-
+        
+		return finalLog;
+	}
+    
     private Map<String, String> locationInfoToMap(ComponentLocation location) {
         Map<String, String> locationInfo = new HashMap<String, String>();
         //locationInfo.put("location", location.getLocation());
@@ -318,7 +341,6 @@ public class LoggerOperations {
 
     // Allows executing timer cleanup on flowListener onComplete events
     private static class TimerRemoverRunnable implements Runnable {
-
         private final String key;
         private final LoggerConfiguration config;
 

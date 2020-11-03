@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>13ecf258-fb9f-4dee-b1d3-4626b6c69bc0</groupId>
+	<groupId>com.brunosouzas.connector</groupId>
 	<artifactId>logger</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-extension</packaging>

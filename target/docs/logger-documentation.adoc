@@ -36,8 +36,8 @@ Default configuration
 * <<HTTPDestination>>
 * <<SQSDestination>> |  |  | {nbsp}
 | Expiration Policy a| <<ExpirationPolicy>> |  +++Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.+++ |  | {nbsp}
-| Application Name a| String |  +++Name of the Mule application. Recommendation: This value should be based on pom.xml+++ |  +++${json.logger.application.name}+++ | {nbsp}
-| Application Version a| String |  +++Version of the Mule application. Recommendation: This value should be based on pom.xml+++ |  +++${json.logger.application.version}+++ | {nbsp}
+| Application Name a| String |  +++Name of the Mule application. Recommendation: This value should be based on pom.xml+++ |  +++${api.name}+++ | {nbsp}
+| Application Version a| String |  +++Version of the Mule application. Recommendation: This value should be based on pom.xml+++ |  +++${api.version}+++ | {nbsp}
 | Environment a| String |  +++Name of the Mule Environment where the application is running. Recommendation: This value should be based on external property+++ |  | *x*{nbsp}
 | Pretty Print a| Boolean |  +++Indicate if log entries should be formatted or single line+++ |  +++true+++ | {nbsp}
 | Log Location Info a| Boolean |  +++Indicate if location information should be logged+++ |  +++true+++ | {nbsp}
@@ -49,6 +49,7 @@ Default configuration
 
 ==== Associated Operations
 * <<logger>> {nbsp}
+* <<loggerPayload>> {nbsp}
 
 
 
@@ -97,6 +98,63 @@ Log a new entry
 | Category a| String |  +++If not set, by default will log to the com.brunosouzas.logger category+++ |  | {nbsp}
 |======================
 
+
+==== For Configurations.
+* <<config>> {nbsp}
+
+
+
+[[loggerPayload]]
+=== Logger Payload
+`<logger:logger-payload>`
+
++++
+Log a new entry
++++
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|======================
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Output Mime Type a| String |  +++The mime type of the payload that this operation outputs.+++ |  | {nbsp}
+| Correlation Id a| String |  |  +++#[correlationId]+++ | {nbsp}
+| Source System a| Enumeration, one of:
+
+** GENERAL |  +++code used to identify the source system of the error.+++ |  | {nbsp}
+| Error Code a| String |  +++error code used to identify the problem in the source system+++ |  | {nbsp}
+| Message a| String |  +++Message to be logged or Source system error message+++ |  | *x*{nbsp}
+| Content a| Binary |  +++NOTE: Writing the entire payload every time across your application can cause serious performance issues+++ |  +++#[import modules::loggerModule output application/json ---
+{
+    payload: loggerModule::stringifyNonJSON(payload) 
+}]+++ | {nbsp}
+| Trace Point a| Enumeration, one of:
+
+** START
+** BEFORE_TRANSFORM
+** AFTER_TRANSFORM
+** BEFORE_REQUEST
+** AFTER_REQUEST
+** FLOW
+** END
+** EXCEPTION |  +++Current processing stage+++ |  +++START+++ | {nbsp}
+| Priority a| Enumeration, one of:
+
+** DEBUG
+** TRACE
+** INFO
+** WARN
+** ERROR |  +++Logger priority+++ |  +++INFO+++ | {nbsp}
+| Category a| String |  +++If not set, by default will log to the com.brunosouzas.logger category+++ |  | {nbsp}
+| Target Variable a| String |  +++The name of a variable on which the operation's output will be placed+++ |  | {nbsp}
+| Target Value a| String |  +++An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable+++ |  +++#[payload]+++ | {nbsp}
+|======================
+
+==== Output
+[cols=".^50%,.^50%"]
+|======================
+| *Type* a| String
+|======================
 
 ==== For Configurations.
 * <<config>> {nbsp}

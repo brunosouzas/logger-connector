@@ -1,4 +1,4 @@
-# Logger Extension
+# Logger Connector
 
 # What?
 This is a Custom Mule logger to replace MuleSoft's out of the box logger to enforce logging standards on mule application logs. 

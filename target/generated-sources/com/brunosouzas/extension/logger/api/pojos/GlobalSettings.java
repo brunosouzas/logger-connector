@@ -27,12 +27,12 @@ public class GlobalSettings {
 
     @JsonProperty("applicationName")
     @Parameter
-    @Optional(defaultValue = "${json.logger.application.name}")
+    @Optional(defaultValue = "${api.name}")
     @Summary("Name of the Mule application. Recommendation: This value should be based on pom.xml")
     private String applicationName;
     @JsonProperty("applicationVersion")
     @Parameter
-    @Optional(defaultValue = "${json.logger.application.version}")
+    @Optional(defaultValue = "${api.version}")
     @Summary("Version of the Mule application. Recommendation: This value should be based on pom.xml")
     private String applicationVersion;
     @JsonProperty("environment")
