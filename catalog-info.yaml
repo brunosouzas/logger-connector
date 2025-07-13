@@ -1,7 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: Json Logger Custom Plugin
+  name: json-logger-custom-plugin
+  title: Json Logger Custom Plugin
+  tags:
+    - plugin
+    - mulesoft
   description: This is a Custom Mule logger to replace MuleSoft's out of the box logger to enforce logging standards on mule application logs.
   annotations:
     github.com/project-slug: 'brunosouzas/logger-plugin'
